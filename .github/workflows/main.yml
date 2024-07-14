@@ -32,8 +32,17 @@ jobs:
       with:
         name: zygisk-module-release
         path: out/magisk-module-release.zip
-
+    - name: Tag
+      if: startsWith(github.ref, 'refs/heads/release/')
+      run: |
+        git tag "v$env:GitVersion_SemVer"
+        git push origin "v$env:GitVersion_SemVer"
     - name: Release
+      if: startsWith(github.ref, 'refs/heads/release/')
       uses: softprops/action-gh-release@v2
       with:
-        files: out/magisk-module-release.zip
+        name: v${{ env.GitVersion_SemVer }}
+        prerelease: ${{ env.GitVersion_PreReleaseLabel != '' }}
+        files: out/magisk-module-*.zip
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
