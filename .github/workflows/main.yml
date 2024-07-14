@@ -13,7 +13,7 @@ jobs:
 
     steps:
     - name: Checkout
-      uses: actions/checkout@v2
+      uses: actions/checkout@v4
       with:
         submodules: 'recursive'
         fetch-depth: 0
@@ -28,7 +28,12 @@ jobs:
         chmod 777 ./build.sh
         ./build.sh
     - name: Upload release
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: zygisk-module-release
         path: out/magisk-module-release.zip
+
+    - name: Release
+      uses: softprops/action-gh-release@v2
+      with:
+        files: out/magisk-module-release.zip

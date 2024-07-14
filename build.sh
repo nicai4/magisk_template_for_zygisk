@@ -19,4 +19,6 @@ rm -rf out
 mkdir -p out
 cp -af magisk-installer-zip out
 mv zygisk-module-sample/module/libs out/magisk-installer-zip/
-zip -r9 out/magisk-module-$build_mode.zip out/magisk-installer-zip
+pushd out/magisk-installer-zip/
+zip -r ../magisk-module-$build_mode.zip *
+popd
