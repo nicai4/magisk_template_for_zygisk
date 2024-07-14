@@ -4,6 +4,7 @@ on:
   workflow_dispatch:
   push:
     branches: [ master ]
+    tags: [v*]
   pull_request:
 
 jobs:
@@ -32,8 +33,10 @@ jobs:
       with:
         name: zygisk-module-release
         path: out/magisk-module-release.zip
-
     - name: Release
       uses: softprops/action-gh-release@v2
       with:
-        files: out/magisk-module-release.zip
+        name: v${{ env.GitVersion_SemVer }}
+        files: out/magisk-module-*.zip
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
