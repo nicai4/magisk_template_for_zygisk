@@ -3,7 +3,7 @@ name: Build zygisk module
 on:
   workflow_dispatch:
   push:
-    branches: [ main ]
+    branches: [ master ]
   pull_request:
 
 jobs:
@@ -31,4 +31,4 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: zygisk-module-release
-        path: out/magisk-module
+        path: out/magisk-module-release.zip
